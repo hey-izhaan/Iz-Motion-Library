@@ -1,0 +1,14 @@
+/* data-animate.css */
+[data-animate] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Accessibility support */
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

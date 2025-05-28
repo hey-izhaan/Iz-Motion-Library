@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section {
+      margin-bottom: 60px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      margin: 20px auto;
+    }
+    .stagger-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .stagger-item {
+      width: 50px;
+      height: 50px;
+      background-color: #e74c3c;
+    }
+    .text-animation {
+      font-size: 24px;
+      text-align: center;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Animation Test</h1>
+
+    <!-- Standard Animations -->
+    <div class="section">
+      <h2>Standard Animations</h2>
+      <div class="box" data-animate="fade-up" data-animate-duration="1"></div>
+      <div class="box" data-animate="fade-down" data-animate-duration="1"></div>
+      <div class="box" data-animate="fade-left" data-animate-duration="1"></div>
+      <div class="box" data-animate="fade-right" data-animate-duration="1"></div>
+      <div class="box" data-animate="scale-up" data-animate-duration="1"></div>
+      <div class="box" data-animate="scale-in" data-animate-duration="1"></div>
+      <div class="box" data-animate="skew" data-animate-duration="1"></div>
+    </div>
+
+    <!-- Stagger Animations -->
+    <div class="section">
+      <h2>Stagger Animations</h2>
+      <div class="stagger-container" data-animate-type="stagger" data-animate="fade-up" data-animate-duration="0.5" data-animate-stagger="0.1">
+        <div class="stagger-item"></div>
+        <div class="stagger-item"></div>
+        <div class="stagger-item"></div>
+        <div class="stagger-item"></div>
+        <div class="stagger-item"></div>
+      </div>
+    </div>
+
+    <!-- Text Animations (Words) -->
+    <div class="section">
+      <h2>Text Animations (Words)</h2>
+      <div class="text-animation" data-animate-type="words" data-animate="fade-up" data-animate-duration="1" data-animate-stagger="0.1">
+        This is a test sentence for word animations.
+      </div>
+    </div>
+
+    <!-- Text Animations (Letters) -->
+    <div class="section">
+      <h2>Text Animations (Letters)</h2>
+      <div class="text-animation" data-animate-type="letters" data-animate="fade-up" data-animate-duration="1" data-animate-stagger="0.05">
+        This is a test sentence for letter animations.
+      </div>
+    </div>
+  </div>
+
+  <!-- GSAP and ScrollTrigger CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
