@@ -1,6 +1,3 @@
-// Debug flag
-const DEBUG = true;
-
 function getTransformProps(animation) {
   if (DEBUG) console.log(`Getting transform props for animation: ${animation}`);
   const transformProps = {};
