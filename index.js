@@ -1,4 +1,5 @@
-let DEBUG = false;
+// Debug flag
+const DEBUG = false;
 
 function getTransformProps(animation) {
   if (DEBUG) console.log(`Getting transform props for animation: ${animation}`);
@@ -40,9 +41,25 @@ function isSplitTextAvailable() {
   return typeof SplitText !== 'undefined';
 }
 
+// Check for reduced motion preference
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 // Initialize animations based on data attributes
 document.addEventListener('DOMContentLoaded', () => {
   if (DEBUG) console.log('DOMContentLoaded - Initializing animations');
+  
+  // Skip all animations if user prefers reduced motion
+  if (prefersReducedMotion()) {
+    if (DEBUG) console.log('Reduced motion preferred - skipping all animations');
+    // Make all elements visible immediately
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+    return;
+  }
   
   // Register GSAP plugins (available via CDN)
   gsap.registerPlugin(ScrollTrigger);
@@ -87,6 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (shouldSkip) {
         if (DEBUG) console.log('Skipping - disabled for this device size');
+        // Make element visible immediately since animation is disabled
+        element.style.opacity = '1';
+        element.style.transform = 'none';
         return;
       }
     }
@@ -95,11 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (type) {
       case 'standard':
         if (DEBUG) console.log('Creating standard animation');
-        // Set initial state
-        gsap.set(element, { 
-          opacity: 0,
-          ...getTransformProps(animation)
-        });
+        // Set initial state (opacity: 0 + transform props)
+        gsap.set(element, { opacity: 0, ...getTransformProps(animation) });
         
         gsap.to(element, {
           opacity: 1,
@@ -120,14 +137,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         break;
 
+      case 'scroll':
+        if (DEBUG) console.log('Creating scroll animation');
+        const scrollDistance = parseFloat(element.getAttribute('data-animate-distance')) || 100;
+        const scrollDirection = element.getAttribute('data-animate-direction') || 'vertical';
+        
+        // Set initial state (opacity: 0 + transform props)
+        const scrollProps = scrollDirection === 'horizontal' ? { x: 0 } : { y: 0 };
+        gsap.set(element, { opacity: 0, ...scrollProps });
+        
+        gsap.to(element, {
+          opacity: 1,
+          [scrollDirection === 'horizontal' ? 'x' : 'y']: scrollDirection === 'horizontal' ? scrollDistance : scrollDistance,
+          duration,
+          ease: "none", // Linear movement for scroll effect
+          scrollTrigger: {
+            trigger: element,
+            start,
+            end,
+            toggleActions: actions,
+            markers: debug,
+            scrub: true, // Ties animation progress to scroll position
+            onUpdate: (self) => {
+              if (DEBUG) console.log(`Scroll progress: ${Math.round(self.progress * 100)}%`);
+            }
+          },
+          onStart: () => DEBUG && console.log('Scroll animation started for:', element),
+          onComplete: () => DEBUG && console.log('Scroll animation completed for:', element)
+        });
+        break;
+
       case 'stagger':
         if (DEBUG) console.log(`Creating stagger animation with ${element.children.length} children`);
-        // Set initial state for all children
-        gsap.set(element.children, { 
-          opacity: 0,
-          y: 20
-        });
-        
+        // Set initial state for all children (opacity: 0 + transform props)
+        gsap.set(element.children, { opacity: 0, y: 20 });
+        gsap.set(element, { opacity: 1});
         gsap.to(element.children, {
           opacity: 1,
           y: 0,
@@ -150,10 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isSplitTextAvailable()) {
           if (DEBUG) console.warn('SplitText not available - falling back to standard animation');
           // Fallback to standard animation
-          gsap.set(element, { 
-            opacity: 0,
-            ...getTransformProps(animation)
-          });
+          gsap.set(element, { opacity: 0, ...getTransformProps(animation) });
           
           gsap.to(element, {
             opacity: 1,
@@ -180,11 +221,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const targets = type === 'words' ? splitType.words : splitType.chars;
         
-        // Set initial state
-        gsap.set(targets, { 
-          opacity: 0,
-          ...getTransformProps(animation)
-        });
+        // Set initial state (opacity: 0 + transform props)
+        gsap.set(targets, { opacity: 0, ...getTransformProps(animation) });
+        gsap.set(element, { opacity: 1});
         
         gsap.to(targets, {
           opacity: 1,
