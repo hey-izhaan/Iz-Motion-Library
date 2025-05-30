@@ -171,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       case 'stagger':
         if (DEBUG) console.log(`Creating stagger animation with ${element.children.length} children`);
+        // Use a more appropriate default stagger for stagger animations
+        const staggerDelay = parseFloat(element.getAttribute('data-animate-stagger')) || 0.1;
+        
         // Set initial state for all children (opacity: 0 + transform props)
         gsap.set(element.children, { opacity: 0, ...getTransformProps(animation) });
         gsap.set(element, { opacity: 1});
@@ -181,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
           y: 0,
           scale: 1,
           skewX: 0,
-          stagger,
+          stagger: staggerDelay,
           duration,
           scrollTrigger: {
             trigger: element,
