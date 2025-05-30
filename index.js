@@ -1,4 +1,4 @@
-Let DEBUG = false;
+let DEBUG = false;
 
 function getTransformProps(animation) {
   if (DEBUG) console.log(`Getting transform props for animation: ${animation}`);
