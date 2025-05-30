@@ -148,6 +148,92 @@ Add the `data-animate` attribute to any element you want to animate. Customize t
 | `data-animate-debug` | Enable debug logging (`true`/`false`). | `false` |
 | `data-animate-disable` | Disable for specific devices (`mobile`, `tablet`, `mobile-tablet`). | None |
 
+
+1. **`data-animate`**  
+   - **Function**: Specifies the type of animation to apply (e.g., `fade-up`, `fade-down`, `fade-right`, `fade-left`, `scale-up`, `scale-in`, `skew`).  
+   - **Example**:  
+     ```html
+     data-animate="fade-up"
+     ```
+
+2. **`data-animate-type`**  
+   - **Function**: Defines the animation type (e.g., `standard`, `scroll`, `stagger`, `words`, `letters`).  
+   - **Example**:  
+     ```html
+     data-animate-type="stagger"
+     ```
+
+3. **`data-animate-duration`**  
+   - **Function**: Sets the duration of the animation in seconds.  
+   - **Example**:  
+     ```html
+     data-animate-duration="1.5"
+     ```
+
+4. **`data-animate-stagger`**  
+   - **Function**: Specifies the delay between animations for staggered effects (e.g., for child elements).  
+   - **Example**:  
+     ```html
+     data-animate-stagger="0.2"
+     ```
+
+5. **`data-animate-start`**  
+   - **Function**: Defines the starting point of the animation relative to the viewport (e.g., `top 90%`).  
+   - **Example**:  
+     ```html
+     data-animate-start="top 80%"
+     ```
+
+6. **`data-animate-end`**  
+   - **Function**: Defines the ending point of the animation relative to the viewport (e.g., `bottom top`).  
+   - **Example**:  
+     ```html
+     data-animate-end="bottom 20%"
+     ```
+
+7. **`data-animate-actions`**  
+   - **Function**: Controls the behavior of the animation on scroll (e.g., `play none none reverse`).  
+   - **Example**:  
+     ```html
+     data-animate-actions="play pause resume reset"
+     ```
+
+8. **`data-animate-debug`**  
+   - **Function**: Enables debug markers for the animation (e.g., `true` or `false`).  
+   - **Example**:  
+     ```html
+     data-animate-debug="true"
+     ```
+
+9. **`data-animate-disable`**  
+   - **Function**: Disables the animation for specific device sizes (e.g., `mobile`, `tablet`, `mobile-tablet`).  
+   - **Example**:  
+     ```html
+     data-animate-disable="mobile"
+     ```
+
+10. **`data-animate-distance`**  
+    - **Function**: Specifies the distance for scroll animations (e.g., `100` pixels).  
+    - **Example**:  
+      ```html
+      data-animate-distance="200"
+      ```
+
+11. **`data-animate-direction`**  
+    - **Function**: Defines the direction for scroll animations (`vertical` or `horizontal`).  
+    - **Example**:  
+      ```html
+      data-animate-direction="horizontal"
+      ```
+
+---
+
+### **Special Notes**
+- The `data-animate` attribute is **required** for any element you want to animate.
+- The `data-animate-type` attribute determines the animation behavior (e.g., standard, scroll, stagger, etc.).
+- Debugging can be enabled globally via the `DEBUG` flag in the script or per element using `data-animate-debug`.
+
+
 ### Advanced Usage
 
 #### Custom Easing
